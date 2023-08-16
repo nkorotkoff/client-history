@@ -18,6 +18,7 @@ const reviewStore = create<ReviewStore>((set, get) => ({
         },
         type: '',
         reviewCreatedSuccessful: null,
+        isLoading: false,
 
         changeFilters: (filter: Filter) => {
             set({
@@ -47,6 +48,7 @@ const reviewStore = create<ReviewStore>((set, get) => ({
                 page: get().pagination.page
             }
             try {
+                set({isLoading: true})
                 const {data} = await actionGetReviews(params)
                 set((state) => ({
                     pagination: {
@@ -69,6 +71,8 @@ const reviewStore = create<ReviewStore>((set, get) => ({
 
             } catch (e) {
                 console.error(e)
+            } finally {
+                set({isLoading: false})
             }
         },
         createReview: async (params: CreateReview) => {
@@ -106,6 +110,9 @@ const reviewStore = create<ReviewStore>((set, get) => ({
                     page: 1,
                 },
             }))
+        },
+        clearStatusCreate: () => {
+            set({reviewCreatedSuccessful: null})
         }
     }
 

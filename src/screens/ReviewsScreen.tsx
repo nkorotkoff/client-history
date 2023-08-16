@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View, Image, ImageSourcePropType} from 'react-native';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View, ImageSourcePropType} from 'react-native';
 import reviewStore from "../store/reviewStore";
 import {Review} from "../interfaces/review";
 import {translate} from "../utils/translateUtil";
+import Loader from "../components/Loader";
 
 interface IData {
     id: string;
@@ -73,6 +74,9 @@ const ReviewsScreen = () => {
 
     return (
         <View style={styles.container}>
+            <>
+                {useReview.isLoading && <Loader/>}
+            </>
             <View style={styles.filter}>
                 <TouchableOpacity onPress={() => handleFilter('')}>
                     <Text style={[styles.filterText, !filter && styles.filterActive]}>Все</Text>

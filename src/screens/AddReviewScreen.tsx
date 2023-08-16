@@ -3,6 +3,7 @@ import {StyleSheet, View, Text, TextInput, Button} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {Picker} from '@react-native-picker/picker';
 import reviewStore from "../store/reviewStore";
+import ModalWindow from "../components/ModalWindow";
 
 
 type FormValues = {
@@ -17,7 +18,9 @@ const AddReviewScreen = () => {
 
     const [type, setReviewType] = useState('film');
 
-    const [showMessages, setShowMessages] = useState(false)
+    const [isVisibleModal, setVisibleModal] = useState(false)
+
+    const [message, setMessage] = useState('')
 
     const useReviewStore = reviewStore()
 
@@ -28,14 +31,24 @@ const AddReviewScreen = () => {
     };
 
     useEffect(() => {
-        if (useReviewStore.reviewCreatedSuccessful) {
-            reset()
+        reset()
+        if (useReviewStore.reviewCreatedSuccessful !== null) {
+            if (useReviewStore.reviewCreatedSuccessful) {
+                setMessage('Отзыв успешно создан')
+            } else {
+                setMessage('Не удалось создать отзыв')
+            }
+            setVisibleModal(true)
         }
+
+        useReviewStore.clearStatusCreate()
+
+
     }, [useReviewStore.reviewCreatedSuccessful])
 
     return (
         <View style={styles.container}>
-
+                <ModalWindow isVisible={isVisibleModal} setVisible={setVisibleModal} message={message}/>
             <Picker
                 selectedValue={type}
                 onValueChange={(itemValue, itemIndex) => {

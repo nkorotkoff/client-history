@@ -43,4 +43,6 @@ export interface ReviewStore {
     reviewCreatedSuccessful: boolean | null,
     updatePage: () => void,
     setFirstPage: () => void,
+    isLoading: boolean,
+    clearStatusCreate: () => void
 }
