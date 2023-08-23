@@ -1,6 +1,7 @@
 import {CreateReview, Filter} from "../../interfaces/review";
 import {instance} from "./axiosBase";
-import {CREATE_REVIEW, GET_REVIEWS} from "./actions";
+import {CREATE_REVIEW, DELETE_REVIEW, GET_REVIEWS, UPDATE_REVIEW} from "./actions";
+import {updateReviewEntity} from "../../interfaces/reviewItem";
 
 
 export function actionGetReviews(filter: { type: string, name: string, date: string, rating: string, page: number | null }) {
@@ -13,6 +14,24 @@ export function actionGetReviews(filter: { type: string, name: string, date: str
 export function actionAddReview(data: CreateReview) {
     return instance.post(
         CREATE_REVIEW,
+        data
+    )
+}
+
+export function actionDeleteReview(reviewId: string) {
+    return instance.delete(
+        DELETE_REVIEW,
+        {
+            data: {
+                review_id: reviewId
+            }
+        }
+    )
+}
+
+export function actionUpdateReview(data: updateReviewEntity) {
+    return instance.post(
+        UPDATE_REVIEW,
         data
     )
 }

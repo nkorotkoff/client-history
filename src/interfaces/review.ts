@@ -1,4 +1,5 @@
 import filter from "../components/Filter";
+import {updateReviewEntity} from "./reviewItem";
 
 export interface Filter {
     name: string,
@@ -19,8 +20,8 @@ export interface Review {
     type: string,
     user_id : number,
     created_at: number,
-    review: string | null,
-    author: string | null
+    review: string  | undefined,
+    author: string  | undefined
 }
 
 export interface CreateReview {
@@ -44,5 +45,7 @@ export interface ReviewStore {
     updatePage: () => void,
     setFirstPage: () => void,
     isLoading: boolean,
-    clearStatusCreate: () => void
+    clearStatusCreate: () => void,
+    deleteReview: (reviewId: string) => void,
+    updateReview: (reviewItem : updateReviewEntity) => void
 }

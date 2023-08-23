@@ -4,6 +4,8 @@ import reviewStore from "../store/reviewStore";
 import {Review} from "../interfaces/review";
 import {translate} from "../utils/translateUtil";
 import Loader from "../components/Loader";
+import {NavigationProps} from "../interfaces/auth";
+import reviewItemStore from "../store/reviewItemStore";
 
 interface IData {
     id: string;
@@ -33,7 +35,9 @@ const Item = React.memo(({ item, onPress }: IItemProps) => (
     <TouchableOpacity onPress={onPress} style={styles.item}>
         {/*<Image source={item.image} style={styles.image} />*/}
         <View style={styles.details}>
-            <Text style={styles.title}>{item.name}</Text>
+            <View style={styles.item_header}>
+                <Text style={styles.title}>{item.name}</Text>
+            </View>
             <Text style={styles.rating}>Оценка: {item.rating}</Text>
             <Text style={styles.date}>Время создания: {formatDateFromTimestamp(item.created_at)}</Text>
             <Text style={styles.type}>Тип: {translate('base', item.type)}</Text>
@@ -41,11 +45,11 @@ const Item = React.memo(({ item, onPress }: IItemProps) => (
     </TouchableOpacity>
 ));
 
-const ReviewsScreen = () => {
-    const [selectedId, setSelectedId] = useState<string>();
+const ReviewsScreen:React.FC<NavigationProps> = ({navigation}) => {
     const [filter, setFilter] = useState<string>('');
 
     const useReview = reviewStore()
+    const useReviewItemStore = reviewItemStore()
 
     useEffect(() => {
         useReview.setUpType(filter)
@@ -62,10 +66,15 @@ const ReviewsScreen = () => {
         return (
             <Item
                 item={item}
-                onPress={() => setSelectedId(item.id)}
+                onPress={() => openReviewItem(item.id)}
             />
         );
     };
+
+    const openReviewItem = (reviewId: string) => {
+        const Review = useReviewItemStore.getReview(reviewId)
+        navigation.navigate('reviewItem', Review)
+    }
 
     const handleFilter = (type: string) => {
         setFilter(type);
@@ -98,7 +107,6 @@ const ReviewsScreen = () => {
                 data={useReview.reviews}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => item.id}
-                extraData={selectedId}
                 onEndReached={() => {useReview.updatePage() }}
             />
         </View>
@@ -159,6 +167,10 @@ const styles = StyleSheet.create({
     filterActive: {
         fontWeight: 'bold',
         color: 'black',
+    },
+    item_header: {
+        flexDirection: "row",
+        justifyContent:"space-between"
     },
 });
 

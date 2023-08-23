@@ -12,6 +12,8 @@ import FilterLayout from "./src/components/FilterLayout";
 import authStore from "./src/store/auth";
 import {NavigationProps} from "./src/interfaces/auth";
 import LogoutScreen from "./src/screens/LogoutScreen";
+import ReviewItemScreen from "./src/screens/ReviewItemScreen";
+import {TouchableOpacity, Text, Image} from "react-native";
 
 
 const App = () => {
@@ -39,6 +41,21 @@ const App = () => {
                                       component={AddReviewScreen}/>
                     <DrawStack.Screen options={{title: 'Выйти'}} name="logout"
                                       component={LogoutScreen}/>
+                    <DrawStack.Screen  options={({ navigation }) => ({
+                        headerLeft: () => (
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <Image style={{
+                                    height:20,
+                                    width:30,
+                                    marginLeft:10
+                                }}
+                                    source={require('./assets/arrow.jpg')}
+                                />
+                            </TouchableOpacity>
+                        ),
+                        drawerItemStyle: { display: 'none' },
+                        // @ts-ignore
+                    })}  component={ReviewItemScreen} name={'reviewItem'}/>
                 </DrawStack.Navigator>
                 : <Stack.Navigator>
                     <Stack.Screen options={{title: 'Войти'}} name="Login" component={LoginScreen}/>

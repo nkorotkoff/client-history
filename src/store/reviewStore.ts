@@ -2,6 +2,7 @@ import {create} from "zustand";
 import {CreateReview, Filter, Review, ReviewStore} from "../interfaces/review";
 import {actionAddReview, actionGetReviews} from "./requests/reviewRequests";
 import {OK} from "./requests/requestCodes";
+import {updateReviewEntity} from "../interfaces/reviewItem";
 
 
 const reviewStore = create<ReviewStore>((set, get) => ({
@@ -113,6 +114,27 @@ const reviewStore = create<ReviewStore>((set, get) => ({
         },
         clearStatusCreate: () => {
             set({reviewCreatedSuccessful: null})
+        },
+
+        deleteReview: (reviewId) => {
+            const reviews = get().reviews.filter((item) => {
+                return item.id !== reviewId
+            })
+
+            set({reviews: reviews})
+        },
+
+        updateReview: (reviewItem: updateReviewEntity) => {
+            // @ts-ignore
+            set((state) => ({
+                reviews: state.reviews.map((review) =>
+                    review.id === reviewItem.id ? { ...review, ...{
+                            review: reviewItem.review,
+                            rating: reviewItem.rating,
+                            name: reviewItem.name
+                        }} : review
+                ),
+            }));
         }
     }
 

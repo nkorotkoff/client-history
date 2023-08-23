@@ -19,12 +19,13 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: 'transparent'
     },
     gifImage: {
-        width: 200,
-        height: 200,
-        opacity: 0.8
+        width: 50,
+        height: 50,
+        opacity: 0.8,
     },
 });
 
