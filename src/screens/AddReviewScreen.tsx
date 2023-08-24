@@ -10,7 +10,8 @@ type FormValues = {
     name: string,
     author: string,
     rating: string,
-    review: string
+    review: string,
+    whereStay: string,
 }
 
 const AddReviewScreen = () => {
@@ -23,6 +24,12 @@ const AddReviewScreen = () => {
     const [message, setMessage] = useState('')
 
     const useReviewStore = reviewStore()
+
+    const typesForWhereStay = [
+        'serial',
+        'anime',
+        'book'
+    ]
 
     const onSubmit = (data: FormValues) => {
         useReviewStore.createReview({
@@ -90,6 +97,21 @@ const AddReviewScreen = () => {
                     />
                 )}
                 name="author"
+                defaultValue=""
+            />}
+
+            {typesForWhereStay.includes(type) && <Controller
+                control={control}
+                render={({field: {onChange, onBlur, value}}) => (
+                    <TextInput
+                        style={styles.input}
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value}
+                        placeholder="Где остановился"
+                    />
+                )}
+                name="whereStay"
                 defaultValue=""
             />}
             <Controller

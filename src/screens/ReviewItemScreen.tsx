@@ -15,7 +15,8 @@ type FormValues = {
     name: string,
     author: string
     rating: string,
-    review: string
+    review: string,
+    whereStay: string,
 }
 
 
@@ -49,6 +50,7 @@ const ReviewItemScreen: React.FC<Props> = ({route, navigation})  => {
         setValue("author", Review.author ?? '')
         setValue("rating", Review.rating.toString())
         setValue("review", Review.review ?? '')
+        setValue("whereStay", Review.whereStay ?? '')
         setReviewType(Review.type)
     }, [route.params])
 
@@ -69,6 +71,12 @@ const ReviewItemScreen: React.FC<Props> = ({route, navigation})  => {
         sedDeletePressed(true)
         useReviewItemStore.deleteReview(Review.id)
     }
+
+    const typesForWhereStay = [
+        'serial',
+        'anime',
+        'book'
+    ]
 
     const updateReview = (values: FormValues) => {
         useReviewItemStore.updateReview({
@@ -120,6 +128,21 @@ const ReviewItemScreen: React.FC<Props> = ({route, navigation})  => {
                     />
                 )}
                 name="author"
+            />}
+
+            {typesForWhereStay.includes(type) && <Controller
+                control={control}
+                render={({field: {onChange, onBlur, value}}) => (
+                    <TextInput
+                        style={styles.input}
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value}
+                        placeholder="Где остановился"
+                    />
+                )}
+                name="whereStay"
+                defaultValue=""
             />}
             <Controller
                 control={control}

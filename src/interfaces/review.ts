@@ -21,7 +21,8 @@ export interface Review {
     user_id : number,
     created_at: number,
     review: string  | undefined,
-    author: string  | undefined
+    author: string  | undefined,
+    whereStay: string | undefined
 }
 
 export interface CreateReview {
@@ -29,7 +30,8 @@ export interface CreateReview {
     rating : string,
     type: string,
     review: string | null,
-    author: string | null
+    author: string | null,
+    whereStay: string| null,
 }
 
 export interface ReviewStore {
