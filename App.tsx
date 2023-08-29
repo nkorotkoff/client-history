@@ -14,6 +14,7 @@ import {NavigationProps} from "./src/interfaces/auth";
 import LogoutScreen from "./src/screens/LogoutScreen";
 import ReviewItemScreen from "./src/screens/ReviewItemScreen";
 import {TouchableOpacity, Text, Image} from "react-native";
+import ExportXlsScreen from "./src/screens/ExportXlsScreen";
 
 
 const App = () => {
@@ -39,6 +40,8 @@ const App = () => {
                     }} name="listOfReviews" component={ReviewsScreen}/>
                     <DrawStack.Screen options={{title: 'Добавить отзыв'}} name="addReview"
                                       component={AddReviewScreen}/>
+                    <DrawStack.Screen options={{title: 'Экспортировать в XLS'}} name="exportXls"
+                                      component={ExportXlsScreen}/>
                     <DrawStack.Screen options={{title: 'Выйти'}} name="logout"
                                       component={LogoutScreen}/>
                     <DrawStack.Screen  options={({ navigation }) => ({

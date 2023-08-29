@@ -11,3 +11,6 @@ export const CREATE_REVIEW = 'api/create-review'
 export const UPDATE_REVIEW = 'api/update-review'
 
 export const DELETE_REVIEW = 'api/delete-review'
+
+
+export const EXPORT_XLS = 'api/get-excel-reviews'

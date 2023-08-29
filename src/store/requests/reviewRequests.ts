@@ -1,6 +1,6 @@
 import {CreateReview, Filter} from "../../interfaces/review";
 import {instance} from "./axiosBase";
-import {CREATE_REVIEW, DELETE_REVIEW, GET_REVIEWS, UPDATE_REVIEW} from "./actions";
+import {CREATE_REVIEW, DELETE_REVIEW, EXPORT_XLS, GET_REVIEWS, UPDATE_REVIEW} from "./actions";
 import {updateReviewEntity} from "../../interfaces/reviewItem";
 
 
@@ -33,5 +33,14 @@ export function actionUpdateReview(data: updateReviewEntity) {
     return instance.post(
         UPDATE_REVIEW,
         data
+    )
+}
+
+export function actionExportXls(type: string) {
+    return instance.get(
+        EXPORT_XLS,
+        {
+            params: {type: type}
+        }
     )
 }
